@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutoresService } from 'src/app/Services/autores.service';
 import { Autor } from 'src/app/interfaces/autores.interface';
 import { Router } from '@angular/router'; 
+import { auto } from '@popperjs/core';
 
 @Component({
   selector: 'app-autores',
@@ -15,7 +16,7 @@ export class AutoresComponent implements OnInit{
   autores?:Autor[];
   form: FormGroup;
   autor?: Autor;
-  
+  mostrarFormulario: boolean = false;
 
   constructor(
     private fb:FormBuilder,
@@ -23,7 +24,7 @@ export class AutoresComponent implements OnInit{
     private router: Router
   ){
     this.form = this.fb.group({
-      "nombre":['',Validators.required]
+      "nombre":['', Validators.required]
     })
   }
 
@@ -41,8 +42,17 @@ export class AutoresComponent implements OnInit{
     });
   }
 
-  Eliminar(atr:Autor){
+  Actualizar(aut:Autor){
+    console.log(aut);
+    this.autorService.selectAutor=Object.assign({},aut);
+    this.router.navigate(['Autores/actualizar']);
+  }
 
+  Eliminar(idAutor:number){
+    console.log(idAutor);
+    this.autorService.deleteAutor(idAutor).subscribe(()=>{
+      this.getAutores();
+    });
   }
 
 

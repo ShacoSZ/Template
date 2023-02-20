@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AutoresComponent } from './components/autores/autores.component';
-import { ReadAutoresComponent } from './components/autores/read-autores/read-autores.component';
+import { UpdateAutoresComponent } from './components/autores/update-autores/update-autores.component';
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { EditorialesComponent } from './components/editoriales/editoriales.component';
 import { HomeComponent } from './components/home/home.component';
@@ -17,9 +17,8 @@ const routes: Routes = [
   {path:"Categorias",component:CategoriasComponent, title:"Categorias"},
   {path:"Editoriales",component:EditorialesComponent, title:"Editoriales"},
   {path:"Idiomas",component:IdiomasComponent, title:"Idiomas"},
-  {path:"Autores",component:AutoresComponent, title:"Autores",children:[
-    {path:"",component:ReadAutoresComponent}
-  ]},
+  {path:"Autores",component:AutoresComponent, title:"Autores"},
+  {path:'Autores/actualizar',component:UpdateAutoresComponent, title:'Actualizar Autor'},
   {path:"Usuarios",component:UsuariosComponent, title:"Usuarios"},
   {path:"**", component:PageNotFoundComponent },
 ];
