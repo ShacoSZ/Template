@@ -13,7 +13,7 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
 import { AutoresComponent } from './components/autores/autores.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ReadAutoresComponent } from './components/autores/read-autores/read-autores.component';
+import { UpdateAutoresComponent } from './components/autores/update-autores/update-autores.component';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { ReadAutoresComponent } from './components/autores/read-autores/read-aut
     EditorialesComponent,
     CategoriasComponent,
     AutoresComponent,
-    ReadAutoresComponent,
+    UpdateAutoresComponent,
   ],
   imports: [
     BrowserModule,
