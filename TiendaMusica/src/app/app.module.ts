@@ -14,6 +14,13 @@ import { AutoresComponent } from './components/autores/autores.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateAutoresComponent } from './components/autores/update-autores/update-autores.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { UpdateIdiomaComponent } from './components/idiomas/update-idioma/update-idioma.component';
+import { UpdateLibroComponent } from './components/libros/update-libro/update-libro.component';
+import { UpdateEditorialComponent } from './components/editoriales/update-editorial/update-editorial.component';
+import { UpdateCategoriaComponent } from './components/update-categoria/update-categoria.component';
+import { LibroIdiomasComponent } from './components/libro-idiomas/libro-idiomas.component';
+import { AgregarLibIdComponent } from './components/agregar-lib-id/agregar-lib-id.component';
 
 
 @NgModule({
@@ -29,6 +36,12 @@ import { UpdateAutoresComponent } from './components/autores/update-autores/upda
     CategoriasComponent,
     AutoresComponent,
     UpdateAutoresComponent,
+    UpdateIdiomaComponent,
+    UpdateLibroComponent,
+    UpdateEditorialComponent,
+    UpdateCategoriaComponent,
+    LibroIdiomasComponent,
+    AgregarLibIdComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +49,7 @@ import { UpdateAutoresComponent } from './components/autores/update-autores/upda
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
