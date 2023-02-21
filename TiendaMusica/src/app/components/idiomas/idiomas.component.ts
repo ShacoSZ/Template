@@ -13,6 +13,7 @@ export class IdiomasComponent implements OnInit{
   form: FormGroup;
   idioma?: Idioma;
   mostrarFormulario: boolean = false;
+  rol_id = localStorage.getItem('rol_id');
 
   constructor(
     private fb:FormBuilder,

@@ -21,6 +21,11 @@ import { UpdateEditorialComponent } from './components/editoriales/update-editor
 import { UpdateCategoriaComponent } from './components/update-categoria/update-categoria.component';
 import { LibroIdiomasComponent } from './components/libro-idiomas/libro-idiomas.component';
 import { AgregarLibIdComponent } from './components/agregar-lib-id/agregar-lib-id.component';
+import { EntrarComponent } from './components/entrar/entrar.component';
+import { MobileCodeComponent } from './components/mobile-code/mobile-code.component';
+import { RegistrarComponent } from './components/registrar/registrar.component';
+import { SalirComponent } from './components/salir/salir.component';
+import { BearerHeaderInterceptor } from './interceptors/bearer-header.interceptor';
 
 
 @NgModule({
@@ -42,6 +47,10 @@ import { AgregarLibIdComponent } from './components/agregar-lib-id/agregar-lib-i
     UpdateCategoriaComponent,
     LibroIdiomasComponent,
     AgregarLibIdComponent,
+    EntrarComponent,
+    MobileCodeComponent,
+    RegistrarComponent,
+    SalirComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +60,11 @@ import { AgregarLibIdComponent } from './components/agregar-lib-id/agregar-lib-i
     ReactiveFormsModule,
     ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+      useClass: BearerHeaderInterceptor,
+      multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

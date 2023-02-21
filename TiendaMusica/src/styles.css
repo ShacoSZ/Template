@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-image: url('https://importancias.com/wp-content/uploads/2022/01/biblioteca-publica-e1642782601881.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1');
+    background-size: cover;
+    background-repeat: no-repeat;
+}

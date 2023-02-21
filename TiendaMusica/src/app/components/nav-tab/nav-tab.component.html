@@ -7,17 +7,25 @@
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a routerLink="Home" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Menu</a>
 
-            <a routerLink="Libros" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Libros</a>
+            <a *ngIf="isSessionActive()" routerLink="Libros" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Libros</a>
 
-            <a routerLink="Idiomas" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Idiomas</a>
+            <a *ngIf="isSessionActive()" routerLink="Idiomas" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Idiomas</a>
 
-            <a routerLink="Editoriales" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Editoriales</a>
+            <a *ngIf="isSessionActive()" routerLink="Editoriales" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Editoriales</a>
 
-            <a routerLink="Autores" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Autores</a>
+            <a *ngIf="isSessionActive()" routerLink="Autores" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Autores</a>
 
-            <a routerLink="Categorias" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categorias</a>
+            <a *ngIf="isSessionActive()" routerLink="Categorias" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categorias</a>
 
-            <a routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>
+            <a *ngIf="rol_id == '1'" routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>
+
+            <a *ngIf="!isSessionActive()" routerLink="Entrar" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Entrar</a>
+
+            <a *ngIf="!isSessionActive()" routerLink="Registrar" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrar</a>
+
+            <a *ngIf="isSessionActive()"  (click)="AgregarSalir()" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Salir</a>
+
+            <a *ngIf="isSessionActive()" class="bg-gray-900 text-white px-40 py-2 rounded-md text-sm font-medium" aria-current="page">Hola {{name}}</a>
 
           </div>
         </div>

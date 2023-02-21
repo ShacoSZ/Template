@@ -34,6 +34,7 @@ export class UpdateEditorialComponent implements OnInit{
         this.router.navigate(["Editoriales"]);
       });
     }
+    this.resetForm(idiomaForm);
   }
 
   regresar(autorForm:NgForm){

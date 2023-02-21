@@ -35,6 +35,7 @@ export class UpdateAutoresComponent implements OnInit{
       }
       );
     }
+    this.resetForm(autorForm);
   }
 
   regresar(autorForm:NgForm){

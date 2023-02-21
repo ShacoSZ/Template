@@ -6,15 +6,20 @@ import { UpdateAutoresComponent } from './components/autores/update-autores/upda
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { EditorialesComponent } from './components/editoriales/editoriales.component';
 import { UpdateEditorialComponent } from './components/editoriales/update-editorial/update-editorial.component';
+import { EntrarComponent } from './components/entrar/entrar.component';
 import { HomeComponent } from './components/home/home.component';
 import { IdiomasComponent } from './components/idiomas/idiomas.component';
 import { UpdateIdiomaComponent } from './components/idiomas/update-idioma/update-idioma.component';
 import { LibroIdiomasComponent } from './components/libro-idiomas/libro-idiomas.component';
 import { LibrosComponent } from './components/libros/libros.component';
 import { UpdateLibroComponent } from './components/libros/update-libro/update-libro.component';
+import { MobileCodeComponent } from './components/mobile-code/mobile-code.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RegistrarComponent } from './components/registrar/registrar.component';
+import { SalirComponent } from './components/salir/salir.component';
 import { UpdateCategoriaComponent } from './components/update-categoria/update-categoria.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { UserGuardGuard } from './guards/user-guard.guard';
 
 const routes: Routes = [
   {path:"",redirectTo:"Home", pathMatch:"full"},
@@ -31,7 +36,11 @@ const routes: Routes = [
   {path:'Idiomas/actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma'},
   {path:"Autores",component:AutoresComponent, title:"Autores"},
   {path:'Autores/actualizar',component:UpdateAutoresComponent, title:'Actualizar Autor'},
-  {path:"Usuarios",component:UsuariosComponent, title:"Usuarios"},
+  {path:"Usuarios",component:UsuariosComponent, title:"Usuarios",canActivate:[UserGuardGuard]},
+  {path:"Entrar", component:EntrarComponent, title:"Entrar"},
+  {path:"Registrar", component:RegistrarComponent, title:"Registrar"},
+  {path:"Salir", component:SalirComponent, title:"Salir",canActivate:[UserGuardGuard]},
+  {path:"Mobile-Code", component:MobileCodeComponent, title:"Mobile-Code"},
   {path:"**", component:PageNotFoundComponent },
 ];
 

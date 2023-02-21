@@ -17,6 +17,7 @@ export class AutoresComponent implements OnInit{
   form: FormGroup;
   autor?: Autor;
   mostrarFormulario: boolean = false;
+  rol_id = localStorage.getItem('rol_id');
 
   constructor(
     private fb:FormBuilder,
@@ -30,6 +31,7 @@ export class AutoresComponent implements OnInit{
 
   ngOnInit() {
       this.getAutores();
+      this.rol_id = localStorage.getItem('rol_id')
   }
 
   getAutores(){
