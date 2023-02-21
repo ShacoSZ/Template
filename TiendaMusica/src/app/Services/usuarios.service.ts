@@ -17,6 +17,19 @@ export class UsuariosService {
       catchError(this.handleError)
     );
   }
+
+  cambiarRol(id:number){
+    return this.http.get(URL.appUrl + "cambiarR/"+id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  cambiarStatus(id:number){
+    return this.http.get(URL.appUrl + "cambiarS/"+id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if(error.status === 0) {
       console.error('Un error ha ocurrido:', error.error);

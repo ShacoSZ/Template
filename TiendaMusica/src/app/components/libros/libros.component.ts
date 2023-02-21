@@ -17,6 +17,7 @@ export class LibrosComponent implements OnInit{
   form: FormGroup;
   libro?: libros;
   mostrarFormulario: boolean = false;
+  rol_id = localStorage.getItem('rol_id');
 
   constructor(
     private fb:FormBuilder,

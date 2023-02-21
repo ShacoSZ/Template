@@ -14,6 +14,7 @@ export class EditorialesComponent {
   form: FormGroup;
   idioma?: Editoriales;
   mostrarFormulario: boolean = false;
+  rol_id = localStorage.getItem('rol_id');
 
   constructor(
     private fb:FormBuilder,
@@ -47,4 +48,6 @@ export class EditorialesComponent {
       });
     }
   }
+
+
 }

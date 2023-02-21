@@ -11,6 +11,7 @@ import { LibrosIdiomasService } from 'src/app/Services/libros-idiomas.service';
 export class LibroIdiomasComponent implements OnInit{
   id = ''
   Idiomas?:libroIdioma[]
+  rol_id = localStorage.getItem('rol_id');
 
   constructor(
     private router:Router ,

@@ -14,6 +14,7 @@ export class CategoriasComponent {
   categorias?:Categoria[];
   form: FormGroup;
   autor?: Categoria;
+  rol_id = localStorage.getItem('rol_id');
   
 
   constructor(
@@ -28,6 +29,7 @@ export class CategoriasComponent {
 
   ngOnInit() {
       this.getCategorias();
+      console.log(localStorage.getItem('rol_id'));
   }
 
   getCategorias(){

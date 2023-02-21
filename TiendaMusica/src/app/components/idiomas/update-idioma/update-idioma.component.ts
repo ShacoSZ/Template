@@ -34,6 +34,7 @@ export class UpdateIdiomaComponent implements OnInit{
         this.router.navigate(["Idiomas"]);
       });
     }
+    this.resetForm(idiomaForm);
   }
 
   regresar(autorForm:NgForm){

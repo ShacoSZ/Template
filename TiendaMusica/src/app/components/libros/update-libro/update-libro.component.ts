@@ -53,6 +53,7 @@ export class UpdateLibroComponent implements OnInit{
       }
       );
     }
+    this.resetForm(libroForm);
   }
 
   getAutores(){
