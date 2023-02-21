@@ -35,7 +35,11 @@ export class UpdateAutoresComponent implements OnInit{
       }
       );
     }
-    this.resetForm;
+  }
+
+  regresar(autorForm:NgForm){
+    this.resetForm(autorForm);
+    this.router.navigate(['Autores']);
   }
 
   resetForm(autorForm:NgForm){
@@ -44,4 +48,5 @@ export class UpdateAutoresComponent implements OnInit{
       this.autorService.selectAutor=new a();
     }
   }
+
 }

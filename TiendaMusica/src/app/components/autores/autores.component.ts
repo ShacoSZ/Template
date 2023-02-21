@@ -49,10 +49,12 @@ export class AutoresComponent implements OnInit{
   }
 
   Eliminar(idAutor:number){
-    console.log(idAutor);
-    this.autorService.deleteAutor(idAutor).subscribe(()=>{
-      this.getAutores();
-    });
+    if (confirm("¿Estas seguro de eliminar al Autor?")){
+      console.log(idAutor);
+      this.autorService.deleteAutor(idAutor).subscribe(()=>{
+        this.getAutores();
+      });
+    }
   }
 
 

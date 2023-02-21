@@ -1,0 +1,51 @@
+<br> 
+<div class="grid grid-cols-5 gap-3">
+    <p></p>
+    <p></p>
+    <div class="col-span-1 text-center">
+        <form #editorialForm="ngForm" (ngSubmit)="submitForm(editorialForm)">
+            <h1 class="dark:text-black uppercase">Editorial</h1>
+            <div class="grid gap-6 mb-2 md:grid-cols-1">
+                <p></p>
+                <div>
+                    <input type="text" name="id" [ngModel]="editorialService.selectEditorial.id" class="hidden" required>
+                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black text-left">Nombre:</label>
+                    <input name="nombre" type="text" [ngModel]="editorialService.selectEditorial.nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                    <div *ngIf="editorialForm.controls['nombre'].invalid && (editorialForm.controls['nombre'].dirty || editorialForm.controls['nombre'].touched)" class="text-red-500">
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">El nombre es obligatoria</span>
+                        </div>
+                    </div>
+                    <label for="correo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black text-left">correo:</label>
+                    <input name="correo" type="email" [ngModel]="editorialService.selectEditorial.correo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                    <div *ngIf="editorialForm.controls['correo'].invalid && (editorialForm.controls['correo'].dirty || editorialForm.controls['correo'].touched)" class="text-red-500">
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">El correo es obligatoria</span>
+                        </div>
+                    </div>
+                    <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black text-left">Direccion:</label>
+                    <input name="direccion" type="text" [ngModel]="editorialService.selectEditorial.direccion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                    <div *ngIf="editorialForm.controls['direccion'].invalid && (editorialForm.controls['direccion'].dirty || editorialForm.controls['direccion'].touched)" class="text-red-500">
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">La direccion es obligatoria</span>
+                        </div>
+                    </div>
+                    <label for="telefono" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black text-left">Telefono:</label>
+                    <input name="telefono" type="number" [ngModel]="editorialService.selectEditorial.telefono" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                    <div *ngIf="!((editorialForm.controls['telefono'].value > 1000000000) && (editorialForm.controls['telefono'].value < 9999999999))" class="text-red-500">
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">Debe ser un telefono</span>
+                        </div>
+                    </div>
+                </div>
+                <p></p>
+            </div>
+            <div class="grid grid-cols-2 gap-5">
+                <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-1 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Guardar Editorial</button>
+                <button (click)="regresar(editorialForm)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Regresar</button>
+            </div>
+        </form>
+    </div>
+    <p></p>
+    <p></p>
+</div>
