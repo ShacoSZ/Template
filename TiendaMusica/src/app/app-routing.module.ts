@@ -16,6 +16,7 @@ import { UpdateLibroComponent } from './components/libros/update-libro/update-li
 import { MobileCodeComponent } from './components/mobile-code/mobile-code.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegistrarComponent } from './components/registrar/registrar.component';
+import { RolComponent } from './components/rol/rol.component';
 import { SalirComponent } from './components/salir/salir.component';
 import { UpdateCategoriaComponent } from './components/update-categoria/update-categoria.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path:"Usuarios",component:UsuariosComponent, title:"Usuarios",canActivate:[UserGuardGuard]},
   {path:"Entrar", component:EntrarComponent, title:"Entrar"},
   {path:"Registrar", component:RegistrarComponent, title:"Registrar"},
+  {path:"Roles/:id", component:RolComponent, title:"Cambiar Rol"},
   {path:"Salir", component:SalirComponent, title:"Salir",canActivate:[UserGuardGuard]},
   {path:"Mobile-Code", component:MobileCodeComponent, title:"Mobile-Code"},
   {path:"**", component:PageNotFoundComponent },

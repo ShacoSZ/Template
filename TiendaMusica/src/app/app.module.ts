@@ -26,6 +26,7 @@ import { MobileCodeComponent } from './components/mobile-code/mobile-code.compon
 import { RegistrarComponent } from './components/registrar/registrar.component';
 import { SalirComponent } from './components/salir/salir.component';
 import { BearerHeaderInterceptor } from './interceptors/bearer-header.interceptor';
+import { RolComponent } from './components/rol/rol.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { BearerHeaderInterceptor } from './interceptors/bearer-header.intercepto
     MobileCodeComponent,
     RegistrarComponent,
     SalirComponent,
+    RolComponent,
   ],
   imports: [
     BrowserModule,

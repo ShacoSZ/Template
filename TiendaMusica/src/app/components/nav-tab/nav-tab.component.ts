@@ -20,7 +20,8 @@ export class NavTabComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-      this.name=localStorage.getItem('name')
+      this.name=localStorage.getItem('name');
+      this.rol_id = localStorage.getItem('rol_id');
   }
 
   AgregarSalir(){
