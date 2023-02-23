@@ -17,7 +17,7 @@
 
             <a *ngIf="isSessionActive()" routerLink="Categorias" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categorias</a>
 
-            <a *ngIf="rol_id == '1'" routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>
+            <a *ngIf="rol_id == '1' && isSessionActive()" routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>            
 
             <a *ngIf="!isSessionActive()" routerLink="Entrar" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Entrar</a>
 

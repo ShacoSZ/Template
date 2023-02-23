@@ -21,7 +21,7 @@ export class UserGuardGuard implements CanActivate {
       },
       error => {
         console.log(error);
-        alert("Tienes que iniciar sesion!"); 
+        alert("Hubo un error, inicie sesion!"); 
         this.respuesta = false;
         localStorage.clear();
         this.router.navigate(['Entrar']);

@@ -12,8 +12,9 @@ export class ValidateTokenService {
   constructor(private http:HttpClient) { }
   getValidateToken() {
     const token = String(localStorage.getItem('Token'));
+    const rol = Number(localStorage.getItem('rol_id'));
     console.log(token);
-    return this.http.get<string>(URL.appUrl + "ValidarToken/"+token).pipe(
+    return this.http.get<string>(URL.appUrl + "ValidarToken/"+token+"/"+rol).pipe(
       retry(3),
       catchError(this.handleError)
     );
