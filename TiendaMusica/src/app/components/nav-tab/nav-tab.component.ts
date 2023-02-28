@@ -1,4 +1,4 @@
-import { Component, OnInit,Injectable  } from '@angular/core';
+import { Component, OnInit,Injectable, Input  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SalirService } from 'src/app/Services/salir.service';
 import { Salir } from 'src/app/interfaces/salir';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavTabComponent implements OnInit{
 
-  rol_id = localStorage.getItem('rol_id');
+  @Input() userType?: string;
+  @Input() userName?: string;
 
   name=localStorage.getItem('name')
   constructor(
@@ -20,8 +21,6 @@ export class NavTabComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-      this.name=localStorage.getItem('name');
-      this.rol_id = localStorage.getItem('rol_id');
   }
 
   AgregarSalir(){

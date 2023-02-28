@@ -22,7 +22,6 @@ export class CategoriaService {
 
   createCategoria(categoria: Categoria): Observable<Categoria>{
     return this.http.post<Categoria>(URL.appUrl + "Categoria",categoria).pipe(
-      catchError(this.handleError)
     );
   }
 
@@ -43,10 +42,11 @@ export class CategoriaService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error
-      )
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
+      );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

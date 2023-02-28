@@ -1,5 +1,5 @@
 <br>
-<div class="grid grid-cols-12 gap-6">
+<div class="grid grid-cols-12 gap-6" *ngIf="rol_id == '1'">
     <p></p>
     <div class="col-span-10">
         <div class="relative overflow-x-auto align-center" [style.height.px]="500">
@@ -50,7 +50,12 @@
                             {{usuarios.rol_id}}
                         </td>
                         <td class="px-6 py-4">
-                            {{usuarios.status}}
+                            <div *ngIf="usuarios.status == 1">
+                                Activo
+                            </div>
+                            <div *ngIf="usuarios.status == 0">
+                                No Activo
+                            </div>
                         </td>
                         <td class="px-6 py-4" *ngIf="rol_id == '1'">
                             <button (click)="cambiarStatus(usuarios.id,usuarios.name)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">cambiar status</button>

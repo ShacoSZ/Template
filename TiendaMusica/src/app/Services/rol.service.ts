@@ -4,13 +4,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { URL } from 'src/app/global-component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
 
   getRoles():Observable<roles[]>{
     return this.http.get<roles[]>(URL.appUrl + "Roles").pipe(
@@ -29,10 +30,12 @@ export class RolService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error
-      )
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
+      );
+      alert("Error: " + error.error.message)
+      this.router.navigate(["Entrar"])
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

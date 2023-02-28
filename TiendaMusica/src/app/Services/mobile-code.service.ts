@@ -25,10 +25,11 @@ export class MobileCodeService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error
-      )
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
+      );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

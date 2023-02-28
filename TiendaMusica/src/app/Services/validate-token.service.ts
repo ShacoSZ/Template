@@ -2,18 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Registrar } from '../interfaces/registrar';
 import { URL } from 'src/app/global-component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegistrarService {
+export class ValidateTokenService {
 
   constructor(private http:HttpClient) { }
-
-  createRegistrar(registrar: Registrar): Observable<Registrar>{
-    return this.http.post<Registrar>(URL.appUrl + "reg",registrar).pipe(
+  getValidateToken() {
+    const token = String(localStorage.getItem('Token'));
+    const rol = Number(localStorage.getItem('rol_id'));
+    console.log(token);
+    return this.http.get<string>(URL.appUrl + "ValidarToken/"+token+"/"+rol).pipe(
+      retry(3),
       catchError(this.handleError)
     );
   }
@@ -23,11 +25,11 @@ export class RegistrarService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.message
-      );
-      alert("Error: " + error.error.message)
+        `El backend regresó el código ${error.status}, el body es:`, error.error
+      )
     }
-  
+
     return throwError(() => new Error(error.message));
   }
+
 }
