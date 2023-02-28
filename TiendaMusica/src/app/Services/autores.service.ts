@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { Autor } from '../interfaces/autores.interface';
 import { URL } from 'src/app/global-component';
 import { Autor as a } from '../autor';
+import { NgFor } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,6 @@ export class AutoresService {
 
   getAutores(): Observable<Autor[]> {
     return this.http.get<Autor[]>(URL.appUrl + "Autor").pipe(
-      retry(3),
-      catchError(this.handleError)
     );
   }
 
@@ -51,10 +50,11 @@ export class AutoresService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.error
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

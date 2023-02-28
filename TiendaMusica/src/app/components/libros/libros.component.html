@@ -77,7 +77,7 @@
                             {{libro.descripcion}}
                         </td>
                         <td class="px-6 py-4">
-                            <a routerLink="/LibrosIdiomas/{{libro.id}}">Idiomas</a>
+                            <a routerLink="/LibrosIdiomas/{{libro.id}}">Ver Idiomas</a>
                         </td>
                         <td class="px-6 py-4" *ngIf="rol_id == '1' || rol_id == '2'">
                             <button (click)="agregar_Actualizar(libro)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Editar</button>

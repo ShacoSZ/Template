@@ -18,7 +18,6 @@ export class IdiomasService {
   getIdiomas(): Observable<Idioma[]> {
     return this.http.get<Idioma[]>(URL.appUrl + "Idioma").pipe(
       retry(3),
-      catchError(this.handleError)
     );
   }
 
@@ -51,10 +50,11 @@ export class IdiomasService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.error
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

@@ -38,7 +38,7 @@ export class UsuariosComponent implements OnInit{
   cambiarStatus(id:number,nom:string){
 
     if(this.nombre == nom){
-      if (confirm("¿Estas seguro de cambiar el estatus? Tendras que volver a iniciar sesion")){
+      if (confirm("¿Estas seguro de cambiar el estatus? Saldras de la sesion")){
         this.UsuariosService.cambiarStatus(id).subscribe(()=>{
           localStorage.clear();
           localStorage.removeItem('name')
@@ -54,4 +54,7 @@ export class UsuariosComponent implements OnInit{
     }
   }
 
+  menu(){
+    this.router.navigate(["Home"])
+  }
 }

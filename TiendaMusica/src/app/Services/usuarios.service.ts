@@ -4,13 +4,19 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Usuarios } from '../interfaces/usuarios';
 import { URL } from 'src/app/global-component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  constructor(private http:HttpClient) { }
+  constructor
+  (
+    private http:HttpClient,
+    private router: Router
+  )
+  { }
   getUsuarios(): Observable<Usuarios[]> {
     return this.http.get<Usuarios[]>(URL.appUrl + "consultas/Usuarios").pipe(
       retry(3),
@@ -38,7 +44,6 @@ export class UsuariosService {
         `El backend regresó el código ${error.status}, el body es:`, error.error
       )
     }
-
     return throwError(() => new Error(error.message));
   }
 }

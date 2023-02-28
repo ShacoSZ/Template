@@ -17,7 +17,7 @@
 
             <a *ngIf="isSessionActive()" routerLink="Categorias" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categorias</a>
 
-            <a *ngIf="rol_id == '1' && isSessionActive()" routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>            
+            <a *ngIf="userType == '1' && isSessionActive()" routerLink="Usuarios" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>            
 
             <a *ngIf="!isSessionActive()" routerLink="Entrar" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Entrar</a>
 
@@ -25,7 +25,7 @@
 
             <a *ngIf="isSessionActive()"  (click)="AgregarSalir()" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Salir</a>
 
-            <a *ngIf="isSessionActive()" class="bg-gray-900 text-white px-40 py-2 rounded-md text-sm font-medium" aria-current="page">Hola {{name}}</a>
+            <a *ngIf="isSessionActive()" class="bg-gray-900 text-white px-40 py-2 rounded-md text-sm font-medium" aria-current="page">Hola {{userName}}</a>
 
           </div>
         </div>

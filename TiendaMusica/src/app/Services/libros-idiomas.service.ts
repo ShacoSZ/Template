@@ -17,7 +17,6 @@ export class LibrosIdiomasService {
 
   getLibroIdioma(id:number):Observable<libroIdioma[]>{
     return this.htpp.get<libroIdioma[]>(URL.appUrl + "Libro_Idioma/libro/" + id).pipe(
-      catchError(this.handleError)
     );
   }
 
@@ -44,10 +43,11 @@ export class LibrosIdiomasService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.error
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }

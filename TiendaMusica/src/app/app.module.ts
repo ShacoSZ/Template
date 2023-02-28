@@ -26,6 +26,7 @@ import { RegistrarComponent } from './components/registrar/registrar.component';
 import { SalirComponent } from './components/salir/salir.component';
 import { BearerHeaderInterceptor } from './interceptors/bearer-header.interceptor';
 import { RolComponent } from './components/rol/rol.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -59,6 +60,8 @@ import { RolComponent } from './components/rol/rol.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

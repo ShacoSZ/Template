@@ -16,7 +16,6 @@ export class LibrosService {
 
   getLibro():Observable<libros[]>{
     return this.htpp.get<libros[]>(URL.appUrl + "Libro").pipe(
-      catchError(this.handleError)
     );
   }
 
@@ -55,10 +54,11 @@ export class LibrosService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.error
+        `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
+      alert("Error: " + error.error.message)
     }
-
+  
     return throwError(() => new Error(error.message));
   }
 }
