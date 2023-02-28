@@ -7,7 +7,6 @@ import { ValidateTokenService } from '../Services/validate-token.service';
   providedIn: 'root'
 })
 export class UserGuardGuard implements CanActivate {
-  
   validacionF?:string;
   respuesta?:Boolean;
   id:number=0;
