@@ -60,7 +60,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule.forRoot(),
     BrowserAnimationsModule
   ],
   providers: [{

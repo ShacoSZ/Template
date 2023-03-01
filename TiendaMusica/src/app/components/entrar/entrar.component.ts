@@ -37,7 +37,8 @@ export class EntrarComponent implements OnInit{
       localStorage.setItem('rol_id', response.rol_id);
       localStorage.setItem('status', response.status);
       localStorage.setItem('name', response.name);
-      this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
+//      this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
+      location.assign('Home');
     });
   }
 

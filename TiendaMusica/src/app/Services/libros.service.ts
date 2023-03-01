@@ -21,7 +21,6 @@ export class LibrosService {
 
   getLibroDatos():Observable<libros[]>{
     return this.htpp.get<libros[]>(URL.appUrl + "LibroDatos").pipe(
-      catchError(this.handleError)
     );
   }
 
