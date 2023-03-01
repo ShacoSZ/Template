@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Categoria } from 'src/app/interfaces/categoria';
 import { CategoriaService } from 'src/app/Services/categoria.service';
 import { categoria } from 'src/app/categoria';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-update-categoria',
@@ -13,26 +14,41 @@ import { categoria } from 'src/app/categoria';
 export class UpdateCategoriaComponent implements OnInit{
   categorias?:Categoria[];
   categoria?:Categoria;
+  rol?:number;
 
   ngOnInit(){
   }
 
   constructor(
     public categoriaServie: CategoriaService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){}
 
+  checarRol(){
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+    })
+  }
+
   submitForm(idiomaForm:NgForm){
-    if(idiomaForm.value.id==null){
-      this.categoriaServie.createCategoria(idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Categorias"]);
-      });
+    this.checarRol();
+    if(this.rol == 1 || this.rol == 2){
+      if(idiomaForm.value.id==null){
+        this.categoriaServie.createCategoria(idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Categorias"]);
+        });
+      }else{
+        this.categoriaServie.updateCategoria(idiomaForm.value.id,idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Categorias"]);
+        });
+      }
     }else{
-      this.categoriaServie.updateCategoria(idiomaForm.value.id,idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Categorias"]);
-      });
+      alert("Usuario invalido, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
     }
   }
 

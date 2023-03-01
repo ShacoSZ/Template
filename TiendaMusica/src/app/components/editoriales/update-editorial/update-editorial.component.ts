@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Editoriales } from 'src/app/interfaces/editoriales';
 import { editorial } from 'src/app/editoriales';
 import { EditorialesService } from 'src/app/Services/editoriales.service';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-update-editorial',
@@ -13,28 +14,43 @@ import { EditorialesService } from 'src/app/Services/editoriales.service';
 export class UpdateEditorialComponent implements OnInit{
   editoriales?:Editoriales[];
   editorial?:Editoriales;
+  rol?:number;
 
   ngOnInit(){
   }
 
+  checarRol(){
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+    })
+  }
+
   constructor(
     public editorialService: EditorialesService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){}
 
   submitForm(idiomaForm:NgForm){
-    if(idiomaForm.value.id==null){
-      this.editorialService.createCategoria(idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Editoriales"]);
-      });
+    this.checarRol();
+    if(this.rol == 1 || this.rol == 2){
+      if(idiomaForm.value.id==null){
+        this.editorialService.createCategoria(idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Editoriales"]);
+        });
+      }else{
+        this.editorialService.updateCategoria(idiomaForm.value.id,idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Editoriales"]);
+        });
+      }
+      this.resetForm(idiomaForm);
     }else{
-      this.editorialService.updateCategoria(idiomaForm.value.id,idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Editoriales"]);
-      });
+      alert("Usuario invalido, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
     }
-    this.resetForm(idiomaForm);
   }
 
   regresar(autorForm:NgForm){

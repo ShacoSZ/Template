@@ -19,6 +19,15 @@ export class ValidateTokenService {
       catchError(this.handleError)
     );
   }
+  getValidateRol() {
+    const token = String(localStorage.getItem('Token'));
+    const rol = Number(localStorage.getItem('rol_id'));
+    console.log(token);
+    return this.http.get<string>(URL.appUrl + "ValidarRol/"+token+"/"+rol).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
 
   private handleError(error: HttpErrorResponse) {
     if(error.status === 0) {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Idioma as i } from 'src/app/idioma';
 import { Idioma } from 'src/app/interfaces/idiomas.interface';
 import { IdiomasService } from 'src/app/Services/idiomas.service';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-update-idioma',
@@ -13,28 +14,44 @@ import { IdiomasService } from 'src/app/Services/idiomas.service';
 export class UpdateIdiomaComponent implements OnInit{
   idiomas?:Idioma[];
   idioma?:Idioma;
+  rol?:number;
 
   ngOnInit(){
   }
 
+  checarRol(){
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+      console.log(this.rol);
+      if(!(this.rol == 1 || this.rol == 2)){
+        alert("Usuario invalido, vuelva a iniciar sesion!"); 
+        localStorage.clear();
+        this.router.navigate(['Entrar']);
+      }
+    })
+  }
+
   constructor(
     public idiomaService: IdiomasService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){}
- 
-  submitForm(idiomaForm:NgForm){
-    if(idiomaForm.value.id==null){
-      this.idiomaService.createIdioma(idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Idiomas"]);
-      });
-    }else{
-      this.idiomaService.updateIdioma(idiomaForm.value.id,idiomaForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Idiomas"]);
-      });
-    }
-    this.resetForm(idiomaForm);
+    submitForm(idiomaForm:NgForm){
+      this.checarRol();
+     
+      if(idiomaForm.value.id==null){
+        this.idiomaService.createIdioma(idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Idiomas"]);
+        });
+      }else{
+        this.idiomaService.updateIdioma(idiomaForm.value.id,idiomaForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Idiomas"]);
+        });
+      }
+      this.resetForm(idiomaForm);
+
   }
 
   regresar(autorForm:NgForm){

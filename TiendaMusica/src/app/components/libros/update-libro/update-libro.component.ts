@@ -10,6 +10,7 @@ import { Autor } from 'src/app/interfaces/autores.interface';
 import { AutoresService } from 'src/app/Services/autores.service';
 import { CategoriaService } from 'src/app/Services/categoria.service';
 import { EditorialesService } from 'src/app/Services/editoriales.service';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-update-libro',
@@ -25,13 +26,15 @@ export class UpdateLibroComponent implements OnInit{
   editorial?:Editoriales;
   autores?:Autor[];
   autor?: Autor;
+  rol?:number;
 
   constructor(
     public libroService:LibrosService,
     public editorialesService:EditorialesService,
     public autorService:AutoresService,
     public categoriaService:CategoriaService,
-    private router:Router
+    private router:Router,
+    private TokenService:ValidateTokenService
   ){}
 
   ngOnInit(){  
@@ -40,7 +43,15 @@ export class UpdateLibroComponent implements OnInit{
     this.getEditoriales();
   }
 
+  checarRol(){
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+    })
+  }
+
   submitForm(libroForm:NgForm){
+    this.checarRol();
+    if(this.rol == 1 || this.rol == 2){
     if(libroForm.value.id==null){
       this.libroService.createLibro(libroForm.value)
       .subscribe((response)=>{
@@ -53,7 +64,12 @@ export class UpdateLibroComponent implements OnInit{
       }
       );
     }
-    this.resetForm(libroForm);
+    this.resetForm(libroForm);}
+    else{
+      alert("Usuario invalido, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
+    }
   }
 
   getAutores(){

@@ -20,6 +20,7 @@ import { RolComponent } from './components/rol/rol.component';
 import { SalirComponent } from './components/salir/salir.component';
 import { UpdateCategoriaComponent } from './components/update-categoria/update-categoria.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { UpCrGuardGuard } from './guards/up-cr-guard.guard';
 import { UserGuardGuard } from './guards/user-guard.guard';
 
 const routes: Routes = [
@@ -33,7 +34,7 @@ const routes: Routes = [
   {path:"Categorias/actualizar",component:UpdateCategoriaComponent,title:"Actualizar Categoria",canActivate:[UserGuardGuard]},
   {path:"Editoriales",component:EditorialesComponent, title:"Editoriales",canActivate:[UserGuardGuard]},
   {path:"Editoriales/actualizar",component:UpdateEditorialComponent,title:"Actualizar Editorial",canActivate:[UserGuardGuard]},
-  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas",canActivate:[UserGuardGuard]},
+  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:'Idiomas/actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard]},
   {path:"Autores",component:AutoresComponent, title:"Autores",canActivate:[UserGuardGuard]},
   {path:'Autores/actualizar',component:UpdateAutoresComponent, title:'Actualizar Autor',canActivate:[UserGuardGuard]},

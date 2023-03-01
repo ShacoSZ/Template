@@ -14,13 +14,13 @@ export class CategoriaService {
   constructor(private http:HttpClient) { }
   getCategorias(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(URL.appUrl + "Categoria").pipe(
-      retry(3)
     );
   }
   selectCategoria:categoria = new categoria()
 
   createCategoria(categoria: Categoria): Observable<Categoria>{
     return this.http.post<Categoria>(URL.appUrl + "Categoria",categoria).pipe(
+      catchError(this.handleError)
     );
   }
 

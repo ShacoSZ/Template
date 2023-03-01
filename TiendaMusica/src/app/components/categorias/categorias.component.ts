@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from 'src/app/Services/categoria.service';
 import { Categoria } from 'src/app/interfaces/categoria';
 import { Router } from '@angular/router'; 
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 
 @Component({
@@ -15,12 +16,14 @@ export class CategoriasComponent {
   form: FormGroup;
   autor?: Categoria;
   rol_id = localStorage.getItem('rol_id');
+  rol?:number;
   
 
   constructor(
     private fb:FormBuilder,
     private CategoriaService:CategoriaService ,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){
     this.form = this.fb.group({
       "categoria":['',Validators.required]
@@ -30,6 +33,12 @@ export class CategoriasComponent {
   ngOnInit() {
       this.getCategorias();
       console.log(localStorage.getItem('rol_id'));
+  }
+
+  checarRol(){
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+    })
   }
 
   getCategorias(){
