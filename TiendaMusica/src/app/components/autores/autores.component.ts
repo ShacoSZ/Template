@@ -4,6 +4,7 @@ import { AutoresService } from 'src/app/Services/autores.service';
 import { Autor } from 'src/app/interfaces/autores.interface';
 import { Router } from '@angular/router'; 
 import { auto } from '@popperjs/core';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-autores',
@@ -18,15 +19,32 @@ export class AutoresComponent implements OnInit{
   autor?: Autor;
   mostrarFormulario: boolean = false;
   rol_id = localStorage.getItem('rol_id');
+  rol?:number;
 
   constructor(
     private fb:FormBuilder,
     private autorService: AutoresService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){
     this.form = this.fb.group({
       "nombre":['', Validators.required]
     })
+  }
+
+  roldecanela()
+  {
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+      const resp = localStorage.getItem('rol_id');
+      console.log(this.rol);
+      if((!(this.rol == Number(resp)))&&(!(this.rol == 1 || this.rol == 2))){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }) 
   }
 
   ngOnInit() {
@@ -51,12 +69,35 @@ export class AutoresComponent implements OnInit{
   }
 
   Eliminar(idAutor:number){
-    if (confirm("¿Estas seguro de eliminar al Autor?")){
+    this.TokenService.getValidateEliminar().subscribe(data => {
+      if (confirm("¿Estas seguro de eliminar al Autor?")){
+        console.log(idAutor);
+        this.autorService.deleteAutor(idAutor).subscribe(()=>{               
+          this.getAutores();
+        });          
+      }
+    },
+    error => {
+    alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+    localStorage.clear();
+    this.router.navigate(['Entrar']);
+    });
+       
+    /*if(compro==true)
+    {*/
+   /* if (confirm("¿Estas seguro de eliminar al Autor?")){
       console.log(idAutor);
       this.autorService.deleteAutor(idAutor).subscribe(()=>{
         this.getAutores();
       });
-    }
+      this.router.navigate(['Autores']);
+    }*/
+    /*}
+    else{
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
+    }*/
   }
 
 

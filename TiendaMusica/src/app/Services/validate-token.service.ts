@@ -28,6 +28,15 @@ export class ValidateTokenService {
       catchError(this.handleError)
     );
   }
+  getValidateEliminar() {
+    const token = String(localStorage.getItem('Token'));
+    const rol = Number(localStorage.getItem('rol_id'));
+    console.log(token);
+    return this.http.get<string>(URL.appUrl + "ValidarEliminar/"+token+"/"+rol).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
 
   private handleError(error: HttpErrorResponse) {
     if(error.status === 0) {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'; 
 import { IdiomasService } from 'src/app/Services/idiomas.service';
 import { Idioma } from 'src/app/interfaces/idiomas.interface';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 @Component({
   selector: 'app-idiomas',
   templateUrl: './idiomas.component.html',
@@ -18,7 +19,8 @@ export class IdiomasComponent implements OnInit{
   constructor(
     private fb:FormBuilder,
     private idiomasService: IdiomasService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService
   ){
     this.form = this.fb.group({
       "idioma":['', Validators.required]
@@ -46,12 +48,20 @@ export class IdiomasComponent implements OnInit{
   }
 
   Eliminar(idIdioma:number){
-    if (confirm("¿Estas seguro de eliminar el Idioma?")){
-      console.log(idIdioma);
-      this.idiomasService.deleteIdioma(idIdioma).subscribe(()=>{
-        this.getAutores();
+    this.TokenService.getValidateEliminar().subscribe(data => 
+      {
+        if (confirm("¿Estas seguro de eliminar el Idioma?")){
+          console.log(idIdioma);
+          this.idiomasService.deleteIdioma(idIdioma).subscribe(()=>{
+            this.getAutores();
+          });
+        }
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
       });
-    }
   }
 
 

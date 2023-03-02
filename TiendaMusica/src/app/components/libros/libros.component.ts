@@ -5,6 +5,7 @@ import { libro } from 'src/app/libro';
 import { libros } from 'src/app/interfaces/libros.interface';
 import { Router } from '@angular/router';
 import { LibrosIdiomasService } from 'src/app/Services/libros-idiomas.service';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 @Component({
   selector: 'app-libros',
   templateUrl: './libros.component.html',
@@ -23,7 +24,8 @@ export class LibrosComponent implements OnInit{
     private fb:FormBuilder,
     private libroService: LibrosService,
     private router: Router,
-    private libroIdiomaServie:LibrosIdiomasService
+    private libroIdiomaServie:LibrosIdiomasService,
+    private TokenService:ValidateTokenService
   ){
     this.form = this.fb.group({
       "nombre":['', Validators.required]
@@ -57,13 +59,22 @@ export class LibrosComponent implements OnInit{
     this.router.navigate(['Libros/actualizar']);
   }
 
-  Eliminar(idLibro:number){
-    if (confirm("¿Estas seguro de eliminar al Autor?")){
-      console.log(idLibro);
-      this.libroService.deletLibro(idLibro).subscribe(()=>{
-        this.getLibros();
+  Eliminar(idLibro:number)
+  {
+    this.TokenService.getValidateEliminar().subscribe(data => 
+      {
+        if (confirm("¿Estas seguro de eliminar al Autor?")){
+          console.log(idLibro);
+          this.libroService.deletLibro(idLibro).subscribe(()=>{
+            this.getLibros();
+          });
+        }
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
       });
-    }
   }
 
   agregarIdioma(lib:libros){

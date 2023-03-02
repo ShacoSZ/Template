@@ -22,7 +22,7 @@ export class UpCrGuardGuard implements CanActivate {
       else{
         alert("Usuario invalido, vuelva a iniciar sesion!"); 
         localStorage.clear();
-        this.router.navigate(['Entrar']);
+        location.assign('Entrar')
         return false
       }
     }

@@ -28,12 +28,19 @@ export class UpdateCategoriaComponent implements OnInit{
   checarRol(){
     this.TokenService.getValidateRol().subscribe((rol)=>{
       this.rol = Number(rol);
+      console.log(this.rol);
+      if(!(this.rol == 1 || this.rol == 2)){
+        alert("Usuario invalido, vuelva a iniciar sesion!"); 
+        localStorage.clear();
+        this.router.navigate(['Entrar']);
+      }
     })
   }
 
-  submitForm(idiomaForm:NgForm){
-    this.checarRol();
-    if(this.rol == 1 || this.rol == 2){
+  submitForm(idiomaForm:NgForm)
+  {
+    this.TokenService.getValidateRol().subscribe(data => 
+    {
       if(idiomaForm.value.id==null){
         this.categoriaServie.createCategoria(idiomaForm.value)
         .subscribe((response)=>{
@@ -45,11 +52,12 @@ export class UpdateCategoriaComponent implements OnInit{
           this.router.navigate(["Categorias"]);
         });
       }
-    }else{
-      alert("Usuario invalido, vuelva a iniciar sesion!"); 
-      localStorage.clear();
-      this.router.navigate(['Entrar']);
-    }
+    },
+    error => {
+    alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+    localStorage.clear();
+    this.router.navigate(['Entrar']);
+    }); 
   }
 
   regresar(autorForm:NgForm){

@@ -27,23 +27,31 @@ export class MobileCodeComponent implements OnInit{
   ngOnInit() {}
 
   AgregarMobileCode(values: MobileCode,urlsao=localStorage.getItem('url')){
+    console.log(urlsao);
     if(urlsao==='string'){
     this.MobileCodeService.createCode(values,urlsao).subscribe((response:any)=>{
       localStorage.setItem('url', response.url);
     });
+    console.log(urlsao);
     }
   }
 
   onSubmit(values: MobileCode, url = localStorage.getItem('url'))
   {
-    if(typeof url === 'string')
+    console.log(url);
+    if(!(url === null))
     {
-      this.MobileCodeService.addMobile(values, url).subscribe(response => {
+      console.log(url);
+      this.MobileCodeService.addMobile(values, String(url)).subscribe(response => {
         console.log(response);
         localStorage.removeItem('url');
         this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
       });
-
+    }
+    else{
+    console.log(url);
+    alert("Tu cuenta ya ha sido activada anteriormente, por favor inicia sesion");
+    location.assign("Entrar")
     }
   }
 

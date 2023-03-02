@@ -46,30 +46,37 @@ export class UpdateLibroComponent implements OnInit{
   checarRol(){
     this.TokenService.getValidateRol().subscribe((rol)=>{
       this.rol = Number(rol);
+      console.log(this.rol);
+      if(!(this.rol == 1 || this.rol == 2)){
+        alert("Usuario invalido, vuelva a iniciar sesion!"); 
+        localStorage.clear();
+        this.router.navigate(['Entrar']);
+      }
     })
   }
 
   submitForm(libroForm:NgForm){
-    this.checarRol();
-    if(this.rol == 1 || this.rol == 2){
-    if(libroForm.value.id==null){
-      this.libroService.createLibro(libroForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Libros"]);
-      });
-    }else{
-      this.libroService.updateLibro(libroForm.value.id,libroForm.value)
-      .subscribe((response)=>{
-        this.router.navigate(["Libros"]);
-      }
-      );
-    }
-    this.resetForm(libroForm);}
-    else{
-      alert("Usuario invalido, vuelva a iniciar sesion!"); 
+    this.TokenService.getValidateRol().subscribe(data => 
+      {
+        if(libroForm.value.id==null){
+          this.libroService.createLibro(libroForm.value)
+          .subscribe((response)=>{
+            this.router.navigate(["Libros"]);
+          });
+        }else{
+          this.libroService.updateLibro(libroForm.value.id,libroForm.value)
+          .subscribe((response)=>{
+            this.router.navigate(["Libros"]);
+          }
+          );
+        }
+        this.resetForm(libroForm);
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
       localStorage.clear();
       this.router.navigate(['Entrar']);
-    }
+      });
   }
 
   getAutores(){

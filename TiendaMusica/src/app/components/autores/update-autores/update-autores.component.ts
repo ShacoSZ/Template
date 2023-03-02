@@ -31,6 +31,7 @@ export class UpdateAutoresComponent implements OnInit{
   autor?: Autor;
   error: string = '';
   rol?:number;
+  status?:string;
 
   constructor(
     public autorService: AutoresService,
@@ -53,9 +54,24 @@ export class UpdateAutoresComponent implements OnInit{
     })
   }
 
+  roldecanela()
+  {
+    this.TokenService.getValidateRol().subscribe((rol)=>{
+      this.rol = Number(rol);
+      const resp = localStorage.getItem('rol_id');
+      console.log(this.rol);
+      if((!(String(this.rol) == String(resp)))||(!(String(this.rol) == "1" || String(this.rol) == "2"))){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }) 
+  }
+
   submitForm(autorForm:NgForm){
-      this.checarRol();
-      this.showSuccessMessage = true;
+      this.TokenService.getValidateRol().subscribe(data => {
+        this.showSuccessMessage = true;
       this.showErrorMessage = false; // Agrega variable para manejar errores
       if(autorForm.value.id==null){
         this.autorService.createAutor(autorForm.value)
@@ -76,6 +92,69 @@ export class UpdateAutoresComponent implements OnInit{
         });
       }
       this.resetForm(autorForm);
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
+      });
+
+     /* this.rol = Number(rol.rol);
+      this.status=String(rol.stats);
+      console.log(String(rol.status));
+      const resp = localStorage.getItem('rol_id');
+      if((!(String(this.rol) == String(resp)))||(!(String(this.rol) == "1" || String(this.rol) == "2"))){
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);      }
+      else{
+this.showSuccessMessage = true;
+      this.showErrorMessage = false; // Agrega variable para manejar errores
+      if(autorForm.value.id==null){
+        this.autorService.createAutor(autorForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Autores"]);
+        }, (error) => { // Manejo de errores
+          this.showErrorMessage = true;
+          this.showSuccessMessage = false;
+        });
+      }else{
+        this.autorService.updateAutor(autorForm.value.id,autorForm.value)
+        .subscribe((response)=>{
+          this.showSuccessMessage = true;
+          this.router.navigate(["Autores"]);
+        }, (error) => { // Manejo de errores
+          this.showErrorMessage = true;
+          this.showSuccessMessage = false;
+        });
+      }
+      this.resetForm(autorForm);
+      }
+    }) 
+
+
+     
+      /*this.showSuccessMessage = true;
+      this.showErrorMessage = false; // Agrega variable para manejar errores
+      if(autorForm.value.id==null){
+        this.autorService.createAutor(autorForm.value)
+        .subscribe((response)=>{
+          this.router.navigate(["Autores"]);
+        }, (error) => { // Manejo de errores
+          this.showErrorMessage = true;
+          this.showSuccessMessage = false;
+        });
+      }else{
+        this.autorService.updateAutor(autorForm.value.id,autorForm.value)
+        .subscribe((response)=>{
+          this.showSuccessMessage = true;
+          this.router.navigate(["Autores"]);
+        }, (error) => { // Manejo de errores
+          this.showErrorMessage = true;
+          this.showSuccessMessage = false;
+        });
+      }
+      this.resetForm(autorForm);*/
   }
 
   regresar(autorForm:NgForm){

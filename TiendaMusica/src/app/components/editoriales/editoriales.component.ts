@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Editoriales } from 'src/app/interfaces/editoriales';
 import { EditorialesService } from 'src/app/Services/editoriales.service';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-editoriales',
@@ -19,7 +20,8 @@ export class EditorialesComponent {
   constructor(
     private fb:FormBuilder,
     private editorialService: EditorialesService,
-    private router: Router
+    private router: Router,
+    private TokenService:ValidateTokenService,
   ){
     this.form = this.fb.group({
       "nombre":['', Validators.required]
@@ -40,14 +42,21 @@ export class EditorialesComponent {
     this.router.navigate(['Editoriales/actualizar']);
   }
 
-  Eliminar(idEditorial:number){
-    if (confirm("¿Estas seguro de eliminar el Idioma?")){
-      console.log(idEditorial);
-      this.editorialService.deleteCategoria(idEditorial).subscribe(()=>{
-        this.getAutores();
+  Eliminar(idEditorial:number)
+  {
+    this.TokenService.getValidateEliminar().subscribe(data => 
+      {
+        if (confirm("¿Estas seguro de eliminar el Idioma?")){
+          console.log(idEditorial);
+          this.editorialService.deleteCategoria(idEditorial).subscribe(()=>{
+            this.getAutores();
+          });
+        }
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
       });
     }
-  }
-
-
 }

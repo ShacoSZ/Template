@@ -4,6 +4,7 @@ import { RolService } from 'src/app/Services/rol.service';
 import { roles as rol } from 'src/app/interfaces/rol';
 import { ActivatedRoute, Router } from '@angular/router';
 import { roles } from 'src/app/rol';
+import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
   selector: 'app-rol',
@@ -22,6 +23,7 @@ export class RolComponent implements OnInit{
     private rolService:RolService,
     private router:Router,
     private route: ActivatedRoute,
+    private TokenService:ValidateTokenService
   ){
     this.form = this.fb.group({
       rol: ['', Validators.required]
@@ -42,7 +44,9 @@ export class RolComponent implements OnInit{
   }
 
   onSubmit(values: rol) {
-    console.log(values)
+    this.TokenService.getValidateEliminar().subscribe(data => 
+      {
+        console.log(values)
     if(this.ida == this.id){
       this.rolService.actualizar(parseInt(this.id),parseInt(values.rol)).subscribe(
         (response)=>{
@@ -58,5 +62,11 @@ export class RolComponent implements OnInit{
         }
       );
     }
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+      localStorage.clear();
+      this.router.navigate(['Entrar']);
+      });
   }
 }

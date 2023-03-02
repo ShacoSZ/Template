@@ -22,6 +22,12 @@ export class UpdateEditorialComponent implements OnInit{
   checarRol(){
     this.TokenService.getValidateRol().subscribe((rol)=>{
       this.rol = Number(rol);
+      console.log(this.rol);
+      if(!(this.rol == 1 || this.rol == 2)){
+        alert("Usuario invalido, vuelva a iniciar sesion!"); 
+        localStorage.clear();
+        this.router.navigate(['Entrar']);
+      }
     })
   }
 
@@ -31,26 +37,28 @@ export class UpdateEditorialComponent implements OnInit{
     private TokenService:ValidateTokenService
   ){}
 
-  submitForm(idiomaForm:NgForm){
-    this.checarRol();
-    if(this.rol == 1 || this.rol == 2){
-      if(idiomaForm.value.id==null){
-        this.editorialService.createCategoria(idiomaForm.value)
-        .subscribe((response)=>{
-          this.router.navigate(["Editoriales"]);
-        });
-      }else{
-        this.editorialService.updateCategoria(idiomaForm.value.id,idiomaForm.value)
-        .subscribe((response)=>{
-          this.router.navigate(["Editoriales"]);
-        });
-      }
-      this.resetForm(idiomaForm);
-    }else{
-      alert("Usuario invalido, vuelva a iniciar sesion!"); 
+  submitForm(idiomaForm:NgForm)
+  {
+    this.TokenService.getValidateRol().subscribe(data => 
+      {
+        if(idiomaForm.value.id==null){
+          this.editorialService.createCategoria(idiomaForm.value)
+          .subscribe((response)=>{
+            this.router.navigate(["Editoriales"]);
+          });
+        }else{
+          this.editorialService.updateCategoria(idiomaForm.value.id,idiomaForm.value)
+          .subscribe((response)=>{
+            this.router.navigate(["Editoriales"]);
+          });
+        }
+        this.resetForm(idiomaForm);    
+      },
+      error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
       localStorage.clear();
       this.router.navigate(['Entrar']);
-    }
+      });
   }
 
   regresar(autorForm:NgForm){

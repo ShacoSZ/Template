@@ -36,23 +36,29 @@ export class UpdateIdiomaComponent implements OnInit{
     private router: Router,
     private TokenService:ValidateTokenService
   ){}
-    submitForm(idiomaForm:NgForm){
-      this.checarRol();
-     
-      if(idiomaForm.value.id==null){
-        this.idiomaService.createIdioma(idiomaForm.value)
-        .subscribe((response)=>{
-          this.router.navigate(["Idiomas"]);
+    submitForm(idiomaForm:NgForm)
+    {
+      this.TokenService.getValidateRol().subscribe(data => 
+        {
+          if(idiomaForm.value.id==null){
+            this.idiomaService.createIdioma(idiomaForm.value)
+            .subscribe((response)=>{
+              this.router.navigate(["Idiomas"]);
+            });
+          }else{
+            this.idiomaService.updateIdioma(idiomaForm.value.id,idiomaForm.value)
+            .subscribe((response)=>{
+              this.router.navigate(["Idiomas"]);
+            });
+          }
+          this.resetForm(idiomaForm);
+        },
+        error => {
+        alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+        localStorage.clear();
+        this.router.navigate(['Entrar']);
         });
-      }else{
-        this.idiomaService.updateIdioma(idiomaForm.value.id,idiomaForm.value)
-        .subscribe((response)=>{
-          this.router.navigate(["Idiomas"]);
-        });
-      }
-      this.resetForm(idiomaForm);
-
-  }
+    }
 
   regresar(autorForm:NgForm){
     this.resetForm(autorForm);

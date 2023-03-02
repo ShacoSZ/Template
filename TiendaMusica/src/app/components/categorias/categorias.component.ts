@@ -52,11 +52,19 @@ export class CategoriasComponent {
   }
 
   Eliminar(idCategoria:number){
-    if (confirm("¿Estas seguro de eliminar el Idioma?")){
-      console.log(idCategoria);
-      this.CategoriaService.deleteCategoria(idCategoria).subscribe(()=>{
-        this.getCategorias();
-      });
-    }
+    this.TokenService.getValidateEliminar().subscribe(data => 
+    {
+      if (confirm("¿Estas seguro de eliminar el Idioma?")){
+        console.log(idCategoria);
+        this.CategoriaService.deleteCategoria(idCategoria).subscribe(()=>{
+          this.getCategorias();
+        });
+      }
+    },
+    error => {
+    alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+    localStorage.clear();
+    this.router.navigate(['Entrar']);
+    });
   }
 }
