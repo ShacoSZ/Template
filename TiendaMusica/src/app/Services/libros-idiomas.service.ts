@@ -5,13 +5,14 @@ import { catchError, retry } from 'rxjs/operators';
 import { libroIdioma as lbid} from '../librosIdiomas';
 import { libroIdioma } from '../interfaces/librosIdiomas';
 import { URL } from '../global-component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LibrosIdiomasService {
 
-  constructor(private htpp:HttpClient) { }
+  constructor(private htpp:HttpClient,private router:Router) { }
   error:any
   selectLibro:lbid = new lbid()
 
@@ -45,7 +46,13 @@ export class LibrosIdiomasService {
       console.error(
         `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
-      alert("Error: " + error.error.message)
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
+      location.assign('Entrar')
     }
   
     return throwError(() => new Error(error.message));

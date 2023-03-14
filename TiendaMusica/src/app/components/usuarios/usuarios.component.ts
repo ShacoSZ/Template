@@ -40,7 +40,11 @@ export class UsuariosComponent implements OnInit{
       },
       error => {
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);
       });
   }
@@ -52,7 +56,11 @@ export class UsuariosComponent implements OnInit{
         if(this.nombre == nom){
           if (confirm("¿Estas seguro de cambiar el estatus? Saldras de la sesion")){
             this.UsuariosService.cambiarStatus(id).subscribe(()=>{
-              localStorage.clear();
+               localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
               localStorage.removeItem('name')
               this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});  
             })
@@ -68,7 +76,11 @@ export class UsuariosComponent implements OnInit{
       },
       error => {
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);
       }); 
   }

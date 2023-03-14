@@ -21,7 +21,11 @@ export class UpCrGuardGuard implements CanActivate {
       }
       else{
         alert("Usuario invalido, vuelva a iniciar sesion!"); 
-        localStorage.clear();
+        localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
         location.assign('Entrar')
         return false
       }

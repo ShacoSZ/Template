@@ -2,7 +2,7 @@
 <div class="grid grid-cols-3 gap-6">
     <p></p>
     <div class="col-span-1">
-        <button *ngIf="rol_id == '1'" routerLink="agregar/{{id}}"
+        <button *ngIf="rol_id == '1' || rol_id == '2'" routerLink="agregar/{{id}}"
         class="grid gap-6 mb-2 md:grid-cols-1 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 
         font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Idioma</button>
         <div class="relative overflow-x-auto align-center" [style.height.px]="500">
@@ -15,7 +15,7 @@
                         <th scope="col" class="px-6 py-3">
                             IDIOMA
                         </th>
-                        <th class="px-6 py-4">
+                        <th class="px-6 py-4" *ngIf="rol_id == '1'">
                             
                         </th>
                     </tr>

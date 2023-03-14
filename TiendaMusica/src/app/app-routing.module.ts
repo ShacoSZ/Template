@@ -29,7 +29,7 @@ const routes: Routes = [
   {path:"Libros",component:LibrosComponent, title:"Libros",canActivate:[UserGuardGuard]},
   {path:"Libros/actualizar",component:UpdateLibroComponent,title:"Actualizar Libro",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"LibrosIdiomas/:id",component:LibroIdiomasComponent, title:"Libros",canActivate:[UserGuardGuard]},
-  {path:"LibrosIdiomas/:id/agregar/:id",component:AgregarLibIdComponent, title:"Libros",canActivate:[UserGuardGuard]},
+  {path:"LibrosIdiomas/:id/agregar/:id",component:AgregarLibIdComponent, title:"Libros",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Categorias",component:CategoriasComponent, title:"Categorias",canActivate:[UserGuardGuard]},
   {path:"Categorias/actualizar",component:UpdateCategoriaComponent,title:"Actualizar Categoria",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Editoriales",component:EditorialesComponent, title:"Editoriales",canActivate:[UserGuardGuard]},

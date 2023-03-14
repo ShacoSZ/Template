@@ -48,7 +48,11 @@ export class UpdateAutoresComponent implements OnInit{
       console.log(this.rol);
       if(!(this.rol == 1 || this.rol == 2)){
         alert("Usuario invalido, vuelva a iniciar sesion!"); 
-        localStorage.clear();
+         localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
         this.router.navigate(['Entrar']);
       }
     })
@@ -95,7 +99,11 @@ export class UpdateAutoresComponent implements OnInit{
       },
       error => {
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);
       });
 
@@ -105,7 +113,11 @@ export class UpdateAutoresComponent implements OnInit{
       const resp = localStorage.getItem('rol_id');
       if((!(String(this.rol) == String(resp)))||(!(String(this.rol) == "1" || String(this.rol) == "2"))){
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);      }
       else{
 this.showSuccessMessage = true;

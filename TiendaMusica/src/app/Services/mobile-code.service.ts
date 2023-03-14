@@ -25,7 +25,7 @@ export class MobileCodeService {
       console.error('Un error ha ocurrido:', error.error);
     } else {
       console.error(
-        `El backend regresó el código ${error.status}, el body es:`, error.error.message
+        `El backend regresó el código ${error.status}, el body es:`, error.error.error
       );
       alert("Error: " + error.error.message)
     }

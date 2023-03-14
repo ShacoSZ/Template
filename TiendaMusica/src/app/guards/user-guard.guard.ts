@@ -23,7 +23,11 @@ export class UserGuardGuard implements CanActivate {
         console.log(error);
         alert("Hubo un error, inicie sesion!"); 
         this.respuesta = false;
-        localStorage.clear();
+        localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
         this.router.navigate(['Entrar']);
       }
     );

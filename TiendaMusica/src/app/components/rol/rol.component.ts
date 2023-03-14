@@ -45,28 +45,37 @@ export class RolComponent implements OnInit{
 
   onSubmit(values: rol) {
     this.TokenService.getValidateEliminar().subscribe(data => 
-      {
-        console.log(values)
-    if(this.ida == this.id){
-      this.rolService.actualizar(parseInt(this.id),parseInt(values.rol)).subscribe(
-        (response)=>{
-          localStorage.clear();
-          localStorage.removeItem('name')
-          this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
-        }
-      );
-    }else{
-      this.rolService.actualizar(parseInt(this.id),parseInt(values.rol)).subscribe(
-        (response)=>{
-          this.router.navigate(['Usuarios'])
-        }
-      );
-    }
-      },
-      error => {
-      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
-      this.router.navigate(['Entrar']);
-      });
+    {
+      console.log(values)
+      if(this.ida == this.id){
+        this.rolService.actualizar(parseInt(this.id),parseInt(values.rol)).subscribe(
+          (response)=>{
+            alert("Saldras de la sesion");
+             localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
+            localStorage.removeItem('name')
+            this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
+          }
+        );
+      }else{
+        this.rolService.actualizar(parseInt(this.id),parseInt(values.rol)).subscribe(
+          (response)=>{
+            this.router.navigate(['Usuarios'])
+          }
+        );
+      }
+    },
+    error => {
+    alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+     localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
+    this.router.navigate(['Entrar']);
+    });
   }
 }

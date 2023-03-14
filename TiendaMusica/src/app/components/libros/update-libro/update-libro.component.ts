@@ -49,7 +49,11 @@ export class UpdateLibroComponent implements OnInit{
       console.log(this.rol);
       if(!(this.rol == 1 || this.rol == 2)){
         alert("Usuario invalido, vuelva a iniciar sesion!"); 
-        localStorage.clear();
+         localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
         this.router.navigate(['Entrar']);
       }
     })
@@ -74,7 +78,11 @@ export class UpdateLibroComponent implements OnInit{
       },
       error => {
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);
       });
   }

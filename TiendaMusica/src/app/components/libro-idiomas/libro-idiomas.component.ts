@@ -42,18 +42,40 @@ export class LibroIdiomasComponent implements OnInit{
   }
 
   agregar(li:libroIdioma){
-    console.log(li);
-    this.librosIdiomasService.selectLibro = Object.assign({},li);
-    this.router.navigate(['LibrosIdiomas/agregar']);
+    this.TokenService.getValidateRol().subscribe(data => 
+    {
+      this.librosIdiomasService.selectLibro = Object.assign({},li);
+      this.router.navigate(['LibrosIdiomas/agregar']);
+    },
+    error => {
+      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
+      this.router.navigate(['Entrar']);
+    });
   }
 
   Eliminar(id:any){
-    if (confirm("¿Estas seguro de eliminar la conexion?")){
-      console.log(id);
-      this.librosIdiomasService.deletLibroIdioma(id).subscribe(()=>{
-        this.getIdiomas(id);
-      });
-    }
+    this.TokenService.getValidateEliminar().subscribe(data => {
+      if (confirm("¿Estas seguro de eliminar la conexion?")){
+        console.log(id);
+        this.librosIdiomasService.deletLibroIdioma(id).subscribe(()=>{
+          this.getIdiomas(id);
+        });
+      }
+    },
+    error => {
+    alert("Hubo un cambio, vuelva a iniciar sesion!"); 
+     localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
+    this.router.navigate(['Entrar']);
+    });
   }
 
 }

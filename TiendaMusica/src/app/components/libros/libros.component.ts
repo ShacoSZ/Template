@@ -72,7 +72,11 @@ export class LibrosComponent implements OnInit{
       },
       error => {
       alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-      localStorage.clear();
+       localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
       this.router.navigate(['Entrar']);
       });
   }

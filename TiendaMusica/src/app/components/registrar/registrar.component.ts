@@ -31,6 +31,8 @@ export class RegistrarComponent implements OnInit{
 
   AgregarRegistrar(values: Registrar){
     this.RegistrarService.createRegistrar(values).subscribe((response:any)=>{
+      console.log(response)
+      console.log(values)
       localStorage.setItem('url', response.url);
       this.router.navigate(['Mobile-Code'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});
     });

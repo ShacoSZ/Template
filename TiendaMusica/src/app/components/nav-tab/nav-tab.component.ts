@@ -26,7 +26,11 @@ export class NavTabComponent implements OnInit{
   AgregarSalir(){
     if(confirm('Desea Cerrar Sesion?'))
       {
-        localStorage.clear();
+         localStorage.removeItem('Token');
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('rol_id');
+        localStorage.removeItem('status');
+        localStorage.removeItem('name');
         localStorage.removeItem('name')
         this.router.navigate(['Home'], { queryParams: {showMessage: true, message: 'Persona modificada con exito.'}});  
         this.SalirService.createSalir().subscribe(response=>{
