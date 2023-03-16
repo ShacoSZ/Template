@@ -27,7 +27,7 @@ export class EntrarService {
       console.error(
         `El backend regresó el código ${error.status}, el body es:`, error.error.message
       );
-      alert("Error: " + error.error.message)
+      alert("Error: " + error.error.mensaje)
     }
   
     return throwError(() => new Error(error.message));

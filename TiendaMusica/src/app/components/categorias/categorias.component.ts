@@ -1,9 +1,10 @@
-import { Component, OnInit,Injectable  } from '@angular/core';
+import { Component, OnInit,Injectable, OnDestroy  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from 'src/app/Services/categoria.service';
 import { Categoria } from 'src/app/interfaces/categoria';
 import { Router } from '@angular/router'; 
 import { ValidateTokenService } from 'src/app/Services/validate-token.service';
+import { interval, startWith, switchMap } from 'rxjs';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ValidateTokenService } from 'src/app/Services/validate-token.service';
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })
-export class CategoriasComponent {
+export class CategoriasComponent implements OnInit, OnDestroy{
   categorias?:Categoria[];
   form: FormGroup;
   autor?: Categoria;
@@ -35,14 +36,23 @@ export class CategoriasComponent {
       console.log(localStorage.getItem('rol_id'));
   }
 
+  ngOnDestroy() {
+    console.log("Muerto")
+    this.CategoriaService.getCategorias().subscribe((categorias) => {this.categorias = categorias;}).unsubscribe()
+  }
+
   checarRol(){
     this.TokenService.getValidateRol().subscribe((rol)=>{
       this.rol = Number(rol);
     })
   }
 
+
   getCategorias(){
-    this.CategoriaService.getCategorias().subscribe((categorias) => {this.categorias = categorias;})
+      interval(5000).pipe(
+      startWith(0),
+      switchMap(() => this.CategoriaService.getCategorias())
+    ).subscribe((categorias) => {this.categorias = categorias;})
   }
 
   AgregarCategoria(categoria: Categoria){

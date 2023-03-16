@@ -1,10 +1,11 @@
-import { Component, OnInit,Injectable } from '@angular/core';
+import { Component, OnInit,Injectable,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutoresService } from 'src/app/Services/autores.service';
 import { Autor } from 'src/app/interfaces/autores.interface';
 import { Router } from '@angular/router'; 
 import { auto } from '@popperjs/core';
 import { ValidateTokenService } from 'src/app/Services/validate-token.service';
+import { socket } from 'src/environments/socket';
 
 @Component({
   selector: 'app-autores',
@@ -25,7 +26,8 @@ export class AutoresComponent implements OnInit{
     private fb:FormBuilder,
     private autorService: AutoresService,
     private router: Router,
-    private TokenService:ValidateTokenService
+    private TokenService:ValidateTokenService,
+    private change:ChangeDetectorRef
   ){
     this.form = this.fb.group({
       "nombre":['', Validators.required]
@@ -50,6 +52,7 @@ export class AutoresComponent implements OnInit{
   ngOnInit() {
       this.getAutores();
       this.rol_id = localStorage.getItem('rol_id')
+      this.getSocket()
   }
 
   getAutores(){
@@ -66,6 +69,14 @@ export class AutoresComponent implements OnInit{
     console.log(aut);
     this.autorService.selectAutor=Object.assign({},aut);
     this.router.navigate(['Autores/actualizar']);
+  }
+
+  getSocket(){
+    socket.on('autores',(autores)=>{
+      console.log(autores)
+      this.autores = autores
+      this.change.detectChanges()
+    })
   }
 
   Eliminar(idAutor:number){
@@ -86,26 +97,6 @@ export class AutoresComponent implements OnInit{
         localStorage.removeItem('name');
     this.router.navigate(['Entrar']);
     });
-       
-    /*if(compro==true)
-    {*/
-   /* if (confirm("¿Estas seguro de eliminar al Autor?")){
-      console.log(idAutor);
-      this.autorService.deleteAutor(idAutor).subscribe(()=>{
-        this.getAutores();
-      });
-      this.router.navigate(['Autores']);
-    }*/
-    /*}
-    else{
-      alert("Hubo un cambio, vuelva a iniciar sesion!"); 
-       localStorage.removeItem('Token');
-        localStorage.removeItem('UserID');
-        localStorage.removeItem('rol_id');
-        localStorage.removeItem('status');
-        localStorage.removeItem('name');
-      this.router.navigate(['Entrar']);
-    }*/
   }
 
 
