@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { URL } from 'src/app/global-component';
 import { Idioma as i } from 'src/app/idioma';
 import { Idioma } from 'src/app/interfaces/idiomas.interface';
 import { IdiomasService } from 'src/app/Services/idiomas.service';
+import { Location } from '@angular/common';
 import { ValidateTokenService } from 'src/app/Services/validate-token.service';
 
 @Component({
@@ -15,6 +17,7 @@ export class UpdateIdiomaComponent implements OnInit{
   idiomas?:Idioma[];
   idioma?:Idioma;
   rol?:number;
+  eventSource: EventSource = new EventSource(URL.appUrl + 'stream');
 
   ngOnInit(){
   }
@@ -38,7 +41,8 @@ export class UpdateIdiomaComponent implements OnInit{
   constructor(
     public idiomaService: IdiomasService,
     private router: Router,
-    private TokenService:ValidateTokenService
+    private TokenService:ValidateTokenService,
+    private location: Location
   ){}
     submitForm(idiomaForm:NgForm)
     {
@@ -47,12 +51,13 @@ export class UpdateIdiomaComponent implements OnInit{
           if(idiomaForm.value.id==null){
             this.idiomaService.createIdioma(idiomaForm.value)
             .subscribe((response)=>{
-              this.router.navigate(["Idiomas"]);
+              // location.assign("Idiomas")
+              // this.location.back()
             });
           }else{
             this.idiomaService.updateIdioma(idiomaForm.value.id,idiomaForm.value)
             .subscribe((response)=>{
-              this.router.navigate(["Idiomas"]);
+              // this.location.back()
             });
           }
           this.resetForm(idiomaForm);
@@ -70,7 +75,7 @@ export class UpdateIdiomaComponent implements OnInit{
 
   regresar(autorForm:NgForm){
     this.resetForm(autorForm);
-    this.router.navigate(['Idiomas']);
+    this.location.back()
   }
 
   resetForm(autorForm:NgForm){
@@ -79,5 +84,4 @@ export class UpdateIdiomaComponent implements OnInit{
       this.idiomaService.selectIdioma=new i();
     }
   }
-
 }

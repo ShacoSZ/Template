@@ -34,8 +34,10 @@ const routes: Routes = [
   {path:"Categorias/actualizar",component:UpdateCategoriaComponent,title:"Actualizar Categoria",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Editoriales",component:EditorialesComponent, title:"Editoriales",canActivate:[UserGuardGuard]},
   {path:"Editoriales/actualizar",component:UpdateEditorialComponent,title:"Actualizar Editorial",canActivate:[UserGuardGuard,UpCrGuardGuard]},
-  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas",canActivate:[UserGuardGuard]},
-  {path:'Idiomas/actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard,UpCrGuardGuard]},
+  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas",canActivate:[UserGuardGuard], children:[
+    {path:'actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard,UpCrGuardGuard]},
+    {path:'',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard,UpCrGuardGuard]},
+  ]},
   {path:"Autores",component:AutoresComponent, title:"Autores",canActivate:[UserGuardGuard]},
   {path:'Autores/actualizar',component:UpdateAutoresComponent, title:'Actualizar Autor',canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Usuarios",component:UsuariosComponent, title:"Usuarios",canActivate:[UserGuardGuard]},
