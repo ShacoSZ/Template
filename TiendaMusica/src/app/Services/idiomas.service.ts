@@ -14,9 +14,10 @@ export class IdiomasService {  private _refresh$ = new Subject<void>();
   error:any
   selectIdioma:i = new i()
 
-  // get_refresh$() {
-  //   return this._refresh$;
-  // }
+  get_refresh$() {
+    return this._refresh$;
+  }
+  
   getIdiomas(): Observable<Idioma[]> {
     return this.http.get<Idioma[]>(URL.appUrl + "Idioma").pipe(
     );

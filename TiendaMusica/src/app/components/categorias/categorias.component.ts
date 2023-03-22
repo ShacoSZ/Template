@@ -56,7 +56,7 @@ export class CategoriasComponent implements OnInit, OnDestroy{
 
 
   getCategorias(){
-      interval(5000).pipe(
+      interval(0).pipe(
       startWith(0),
       switchMap(() => this.CategoriaService.getCategorias())
     ).subscribe((categorias) => {this.categorias = categorias;})

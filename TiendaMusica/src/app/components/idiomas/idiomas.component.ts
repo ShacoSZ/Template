@@ -17,11 +17,10 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   idioma?: Idioma;
   mostrarFormulario: boolean = false;
   rol_id = localStorage.getItem('rol_id');
-  eventSource?: EventSource;
+  estado: boolean = false;
+  message: string = '';
+  eventSource: EventSource = new EventSource(URL.appUrl + 'stream');
   suscription?: Subscription;
-  eventS?:EventSource;
-  message?:string= ''
-  estado?:boolean
 
   constructor(
     private fb:FormBuilder,
@@ -35,41 +34,58 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   }
   
   ngOnInit() {
-    this.getAutores();
-    this.eventS = new EventSource(URL.appUrl + 'idiomas/eventos');
-    this.eventS.addEventListener('new:idioma', (event) => {
-      console.log('Se ha agregado una nueva consola');
+
+    this.eventSource.onopen = () => {
+      console.log('Conectado al event source');
       this.getAutores();
+
+   };
+    this.getAutores();
+    this.eventSource.onerror = (error) => {
+      console.log('Error en el event source');
+      console.log(error);
+    };
+    this.eventSource.addEventListener('new:ingrediente', (event) => {
+      console.log('Mensaje del event source');
+      this.getAutores();
+      console.log(event);
+      this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
+        this.getAutores();
+      });
+      this.message = event.data;
+      this.estado = true;
+    });
+    this.eventSource.addEventListener('update:ingrediente', (event) => {
+      console.log('Mensaje del event source');
+      this.getAutores();
+      console.log(event);
+      this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
+        this.getAutores();
+      });
+      this.message = event.data;
+      this.estado = true;
+    });
+    this.eventSource.addEventListener('delete:ingrediente', (event) => {
+      console.log('Mensaje del event source');
+      this.getAutores();
+      console.log(event);
+      this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
+        this.getAutores();
+      });
+      this.message = event.data;
+      this.estado = true;
     });
 
-//    this.eventS.onopen = () => {
-//      console.log('Conectado al event source');
-//      this.getAutores();
-//   };
-//
-//   this.getAutores();
-//    this.eventS.onerror = (error) => {
-//      console.log('Error en el event source');
-//      console.log(error);
-//    };
-    /*this.eventS.addEventListener('new:idioma', (event) => {
-      console.log(event)
-      this.getAutores()
-    })*/
-
-    //this.eventS.addEventListener('new:idioma', (event) => {
-      //console.log('Mensaje del event source');
-      // this.getAutores();
-     // console.log(event);
-      // this.getAutores()
-      // this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
-      //   this.getAutores();
-      // });
-      // this.message = event.data;
-      // this.estado = true;
-      // console.log(this.message);
-      // console.log(this.estado);
-    //});
+    this.eventSource.addEventListener('message', (event) => {
+      console.log('Mensaje del event source');
+      this.getAutores();
+      console.log(event);
+      this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
+        this.getAutores();
+      });
+      this.message = event.data;
+      this.estado = true;
+    });
 
   }
 
@@ -90,18 +106,7 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    // Cierra la conexión con EventSource
-    if (this.eventSource) {
-      this.eventSource.close();
-    }
-    // Cancela la suscripción al servicio de ingredientes
-    if (this.suscription) {
-      this.suscription.unsubscribe();
-    }
-    //cierra el eventS
-    if(this.eventS){
-      this.eventS.close();
-    }
+
   }
 
 
