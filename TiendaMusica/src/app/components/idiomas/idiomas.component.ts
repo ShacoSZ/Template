@@ -19,6 +19,9 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   rol_id = localStorage.getItem('rol_id');
   eventSource?: EventSource;
   suscription?: Subscription;
+  eventS?:EventSource;
+  message?:string= ''
+  estado?:boolean
 
   constructor(
     private fb:FormBuilder,
@@ -33,14 +36,40 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   
   ngOnInit() {
     this.getAutores();
+    this.eventS = new EventSource(URL.appUrl + 'idiomas/eventos');
+    this.eventS.addEventListener('new:idioma', (event) => {
+      console.log('Se ha agregado una nueva consola');
+      this.getAutores();
+    });
 
-    let eventS = new EventSource(URL.appUrl + 'idiomas/eventos')
-
-
-    eventS.addEventListener("notice", data => {
-      console.log(data)
+//    this.eventS.onopen = () => {
+//      console.log('Conectado al event source');
+//      this.getAutores();
+//   };
+//
+//   this.getAutores();
+//    this.eventS.onerror = (error) => {
+//      console.log('Error en el event source');
+//      console.log(error);
+//    };
+    /*this.eventS.addEventListener('new:idioma', (event) => {
+      console.log(event)
       this.getAutores()
-    })
+    })*/
+
+    //this.eventS.addEventListener('new:idioma', (event) => {
+      //console.log('Mensaje del event source');
+      // this.getAutores();
+     // console.log(event);
+      // this.getAutores()
+      // this.suscription = this.idiomasService.get_refresh$().subscribe(() => {
+      //   this.getAutores();
+      // });
+      // this.message = event.data;
+      // this.estado = true;
+      // console.log(this.message);
+      // console.log(this.estado);
+    //});
 
   }
 
@@ -57,7 +86,7 @@ export class IdiomasComponent implements OnInit, OnDestroy{
   Actualizar(idi:Idioma){
     console.log(idi);
     this.idiomasService.selectIdioma=Object.assign({},idi);
-    this.router.navigate(['Idiomas/actualizar']);
+    this.router.navigate(['/Idiomas/actualizar']);
   }
 
   ngOnDestroy(): void {
@@ -68,6 +97,10 @@ export class IdiomasComponent implements OnInit, OnDestroy{
     // Cancela la suscripción al servicio de ingredientes
     if (this.suscription) {
       this.suscription.unsubscribe();
+    }
+    //cierra el eventS
+    if(this.eventS){
+      this.eventS.close();
     }
   }
 

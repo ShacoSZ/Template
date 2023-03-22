@@ -3,21 +3,22 @@ import { Idioma as i } from '../idioma';
 import { Idioma } from '../interfaces/idiomas.interface';
 import { URL } from '../global-component';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IdiomasService {
-
+export class IdiomasService {  private _refresh$ = new Subject<void>();
   constructor(private http:HttpClient) { }
   error:any
   selectIdioma:i = new i()
 
+  // get_refresh$() {
+  //   return this._refresh$;
+  // }
   getIdiomas(): Observable<Idioma[]> {
     return this.http.get<Idioma[]>(URL.appUrl + "Idioma").pipe(
-      retry(3),
     );
   }
 

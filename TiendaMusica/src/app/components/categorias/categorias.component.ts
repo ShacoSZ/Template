@@ -4,7 +4,7 @@ import { CategoriaService } from 'src/app/Services/categoria.service';
 import { Categoria } from 'src/app/interfaces/categoria';
 import { Router } from '@angular/router'; 
 import { ValidateTokenService } from 'src/app/Services/validate-token.service';
-import { interval, startWith, switchMap } from 'rxjs';
+import { interval, startWith, switchMap, Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class CategoriasComponent implements OnInit, OnDestroy{
   autor?: Categoria;
   rol_id = localStorage.getItem('rol_id');
   rol?:number;
+  suscripcion?:Subscription
   
 
   constructor(
@@ -31,14 +32,20 @@ export class CategoriasComponent implements OnInit, OnDestroy{
     })
   }
 
-  ngOnInit() {
-      this.getCategorias();
+  ngOnInit():void {
+//      this.suscripcion = this.getCategorias();
       console.log(localStorage.getItem('rol_id'));
+      this.suscripcion = interval(5000).subscribe(()=>{
+        this.get_categoria();
+      });
   }
 
   ngOnDestroy() {
     console.log("Muerto")
-    this.CategoriaService.getCategorias().subscribe((categorias) => {this.categorias = categorias;}).unsubscribe()
+    if(this.suscripcion)
+    {
+      this.suscripcion.unsubscribe();
+    }
   }
 
   checarRol(){
@@ -53,6 +60,11 @@ export class CategoriasComponent implements OnInit, OnDestroy{
       startWith(0),
       switchMap(() => this.CategoriaService.getCategorias())
     ).subscribe((categorias) => {this.categorias = categorias;})
+  }
+
+  get_categoria()
+  {
+    this.CategoriaService.getCategorias().subscribe((categorias) => {this.categorias = categorias;})
   }
 
   AgregarCategoria(categoria: Categoria){
