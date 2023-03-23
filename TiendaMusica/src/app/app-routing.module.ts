@@ -15,6 +15,7 @@ import { LibrosComponent } from './components/libros/libros.component';
 import { UpdateLibroComponent } from './components/libros/update-libro/update-libro.component';
 import { MobileCodeComponent } from './components/mobile-code/mobile-code.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {IdiomaGuestComponent} from './components/idioma-guest/idioma-guest.component'
 import { RegistrarComponent } from './components/registrar/registrar.component';
 import { RolComponent } from './components/rol/rol.component';
 import { SalirComponent } from './components/salir/salir.component';
@@ -34,10 +35,11 @@ const routes: Routes = [
   {path:"Categorias/actualizar",component:UpdateCategoriaComponent,title:"Actualizar Categoria",canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Editoriales",component:EditorialesComponent, title:"Editoriales",canActivate:[UserGuardGuard]},
   {path:"Editoriales/actualizar",component:UpdateEditorialComponent,title:"Actualizar Editorial",canActivate:[UserGuardGuard,UpCrGuardGuard]},
-  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas",canActivate:[UserGuardGuard], children:[
-    {path:'actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard,UpCrGuardGuard]},
-    {path:'',component:UpdateIdiomaComponent, title:'Actualizar Idioma',canActivate:[UserGuardGuard,UpCrGuardGuard]},
+  {path:"Idiomas",component:IdiomasComponent, title:"Idiomas", children:[
+    {path:'actualizar',component:UpdateIdiomaComponent, title:'Actualizar Idioma'},
+    {path:'',component:UpdateIdiomaComponent, title:'Actualizar Idioma'},
   ]},
+  {path:"idiomas",component:IdiomaGuestComponent, title:"idiomas",canActivate:[UserGuardGuard]},
   {path:"Autores",component:AutoresComponent, title:"Autores",canActivate:[UserGuardGuard]},
   {path:'Autores/actualizar',component:UpdateAutoresComponent, title:'Actualizar Autor',canActivate:[UserGuardGuard,UpCrGuardGuard]},
   {path:"Usuarios",component:UsuariosComponent, title:"Usuarios",canActivate:[UserGuardGuard]},
